@@ -1,0 +1,154 @@
+name: home_food_geneva
+description: A new Flutter application.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  align_positioned: ^2.0.2
+  carousel_pro: ^1.0.0
+  carousel_slider: ^4.0.0
+  contactus: ^1.1.9
+  google_fonts: ^2.1.0
+  http: ^0.13.3
+  images: ^1.0.0
+  introduction_screen: ^1.0.8
+  local_assets_server: ^2.0.2+12
+  material_design_icons_flutter: ^4.0.5955
+  provider: ^4.0.1
+  shared_preferences: ^0.5.1+2
+  url_launcher: ^6.0.8
+font_awesome_flutter: ^8.5.0
+carousel_slider: ^2.3.1
+carousel_pro: ^1.0.0
+http: ^0.12.0+4
+url_launcher: ^6.0.8
+align_positioned: ^2.0.2
+contactus: ^1.1.9
+google_fonts: ^2.1.0
+material_design_icons_flutter: null
+
+# The following adds the Cupertino Icons font to your application.
+# Use with the CupertinoIcons class for iOS style icons.
+cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - images/appetizer.jpg
+    - images/appetizer2.jpg
+    - images/maincourse.jpg
+    - images/maincourse2.jpg
+    - images/desserts.jpg
+    - images/breads.jpg
+    - images/breads2.jpg
+    - images/catering.jpg
+    - images/catering2.jpg
+    - images/adaspolo.jpg
+    - images/alooesfenaj.jpg
+    - images/ashreshte.jpg
+    - images/baghalipolo.jpg
+    - images/curry.jpg
+    - images/fesenjoon.jpg
+    - images/gheime.jpg
+    - images/gheimebademjoon.jpg
+    - images/ghorme.jpg
+    - images/kabab.jpg
+    - images/karafs.jpg
+    - images/kashkbademjoon.jpg
+    - images/kookoosabzi.jpg
+    - images/loobiapolo.jpg
+    - images/mirzaghasemi.jpg
+    - images/soupjo.jpg
+    - images/tahchin.jpg
+    - images/zereshkpolo.jpg
+    - images/start.jpg
+    - images/freshfood.jpg
+    - images/fresh.jpg
+    - images/delivery.jpg
+    - images/payment.jpg
+    - images/sidemenu.jpg
+    - images/about.jpg
+    - images/blur.jpg
+    - images/introduce.jpg
+    - images/carousel1.jpg
+    - images/carousel2.jpg
+    - images/carousel3.jpg
+    - images/carousel4.jpg
+    - images/carousel5.jpg
+    - images/carousel6.jpg
+    - images/carousel7.jpg
+    - images/carousel8.jpg
+    - images/carousel9.jpg
+    - images/carousel10.jpg
+    - images/carousel11.jpg
+    - images/carousel12.jpg
+    - images/carousel13.jpg
+    - images/carousel14.jpg
+    - images/carousel15.jpg
+    - images/carousel16.jpg
+    - images/carousel17.jpg
+    - images/carousel18.jpg
+    - images/carousel19.jpg
+    - images/carousel20.jpg
+    - images/carousel21.jpg
+    - images/carousel22.jpg
+    - images/carousel23.jpg
+    - images/carousel24.jpg
+    - images/carousel25.jpg
+    - images/carousel26.jpg
+    - images/carousel27.jpg
+    - assets/data.json
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: IndieFlower
+      fonts:
+        - asset: fonts/IndieFlower-Regular.ttf
+    - family: Samantha
+      fonts:
+        - asset: fonts/samantha.ttf
+    - family: OpenSans
+      fonts:
+        - asset: fonts/OpenSans-Regular.ttf
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

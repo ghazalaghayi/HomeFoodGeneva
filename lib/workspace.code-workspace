@@ -1,0 +1,43 @@
+{
+	"folders": [
+		{
+			"path": "..\\test"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\web"
+		},
+		{
+			"path": "..\\.dart_tool"
+		},
+		{
+			"path": "..\\.gradle"
+		},
+		{
+			"path": "..\\.idea"
+		},
+		{
+			"path": "..\\android"
+		},
+		{
+			"path": "..\\assets"
+		},
+		{
+			"path": "..\\build"
+		},
+		{
+			"path": "..\\fonts"
+		},
+		{
+			"path": "..\\gradle"
+		},
+		{
+			"path": "..\\images"
+		},
+		{
+			"path": "..\\ios"
+		}
+	]
+}
