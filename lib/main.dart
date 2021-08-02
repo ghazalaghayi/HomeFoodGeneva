@@ -4,12 +4,14 @@ import 'package:home_food_geneva/SplashScreen.dart';
 import 'package:provider/provider.dart';
 import 'AppProvider.dart';
 import 'Const.dart';
+import 'Auth.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
+        ChangeNotifierProvider(create: (_) => Auth()),
       ],
       child: MyApp(),
     ),

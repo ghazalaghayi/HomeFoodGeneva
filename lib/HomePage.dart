@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_food_geneva/ShoppingCart.dart';
+import 'package:home_food_geneva/ShopList.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:convert';
 import 'NavigationBar.dart';
@@ -61,8 +61,10 @@ class HomePage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             object["placeName"],
-                            style:
-                                TextStyle(fontSize: 15, fontFamily: "OpenSans"),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontFamily: "OpenSans"),
                           ),
                           Text(
                             finalString,
@@ -78,7 +80,9 @@ class HomePage extends StatelessWidget {
                           Text(
                             object["placeCommon"],
                             style: TextStyle(
-                                fontSize: 12.0, fontFamily: "OpenSans"),
+                                color: Colors.white,
+                                fontSize: 12.0,
+                                fontFamily: "OpenSans"),
                           )
                         ],
                       )),
@@ -92,6 +96,7 @@ class HomePage extends StatelessWidget {
     }
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 15.0,
         centerTitle: true,
@@ -157,9 +162,7 @@ class HomePage extends StatelessWidget {
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (BuildContext context) {
-            return ShoppingList(
-              products: [Product(20, name: "Tah-Chin")],
-            );
+            return ShopListWidget();
           }));
         },
         backgroundColor: Colors.red[400],

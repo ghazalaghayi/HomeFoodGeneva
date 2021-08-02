@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:home_food_geneva/AuthScreen.dart';
+import 'package:home_food_geneva/ShopList.dart';
 import 'HomePage.dart';
-import 'SignUp.dart';
 import 'About.dart';
 import 'Contact.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -37,12 +38,24 @@ class DrawerOnly extends StatelessWidget {
         ),
         Divider(),
         new ListTile(
+          title: new Text(
+            "Order",
+            style: TextStyle(fontFamily: "OpenSans"),
+          ),
+          onTap: () {
+            Navigator.pop(ctxt);
+            Navigator.push(ctxt,
+                new MaterialPageRoute(builder: (ctxt) => new ShopListWidget()));
+          },
+        ),
+        Divider(),
+        new ListTile(
           title: new Text("SignUp or LogIn",
               style: TextStyle(fontFamily: "OpenSans")),
           onTap: () {
             Navigator.pop(ctxt);
             Navigator.push(ctxt,
-                new MaterialPageRoute(builder: (ctxt) => new SignUpPage()));
+                new MaterialPageRoute(builder: (ctxt) => new AuthScreen()));
           },
         ),
         Divider(),

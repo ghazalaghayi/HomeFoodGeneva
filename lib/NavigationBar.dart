@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:home_food_geneva/AuthScreen.dart';
 import 'package:home_food_geneva/HomePage.dart';
 import 'package:home_food_geneva/PhotoAlbum.dart';
-import 'package:home_food_geneva/SignUp.dart';
 
 class NavigationBar extends StatelessWidget {
   @override
@@ -55,40 +55,10 @@ class NavigationBar extends StatelessWidget {
             onPressed: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return SignUpPage();
+                return AuthScreen();
               }));
             },
           ),
-          /* IconButton(
-            icon: Icon(
-              Icons.shopping_cart,
-              size: 28.0,
-            ),
-            color: _page == 3
-                ? Theme.of(context).accentColor
-                : Theme.of(context).textTheme.caption.color,
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return ShoppingCart();
-              }));
-            },
-          ), */
-          /*  IconButton(
-            icon: Icon(
-              Icons.login,
-              size: 28.0,
-            ),
-            color: _page == 4
-                ? Theme.of(context).accentColor
-                : Theme.of(context).textTheme.caption.color,
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return Register();
-              }));
-            },
-          ), */
           SizedBox(width: 7),
         ],
       ),
