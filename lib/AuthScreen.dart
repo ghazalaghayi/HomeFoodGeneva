@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Auth.dart';
+import 'AuthProvider.dart';
 import 'HttpException.dart';
 
 enum AuthMode { Signup, Login }
@@ -22,11 +22,7 @@ class AuthScreen extends StatelessWidget {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('images/start.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
+                image: DecorationImage(image: AssetImage('images/start.jpg'))),
           ),
           SingleChildScrollView(
             child: Container(
@@ -46,17 +42,17 @@ class AuthScreen extends StatelessWidget {
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.black,
+                        color: Colors.red[400],
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 8,
-                            color: Colors.white38,
+                            color: Colors.black26,
                             offset: Offset(0, 2),
                           )
                         ],
                       ),
                       child: Text(
-                        'Join :))',
+                        'Join Us',
                         style: TextStyle(
                           color: Theme.of(context).accentTextTheme.title.color,
                           fontSize: 50,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:home_food_geneva/AuthScreen.dart';
-import 'package:home_food_geneva/ShopList.dart';
 import 'HomePage.dart';
 import 'About.dart';
 import 'Contact.dart';
@@ -34,18 +33,6 @@ class DrawerOnly extends StatelessWidget {
             Navigator.pop(ctxt);
             Navigator.push(
                 ctxt, new MaterialPageRoute(builder: (ctxt) => new HomePage()));
-          },
-        ),
-        Divider(),
-        new ListTile(
-          title: new Text(
-            "Order",
-            style: TextStyle(fontFamily: "OpenSans"),
-          ),
-          onTap: () {
-            Navigator.pop(ctxt);
-            Navigator.push(ctxt,
-                new MaterialPageRoute(builder: (ctxt) => new ShopListWidget()));
           },
         ),
         Divider(),

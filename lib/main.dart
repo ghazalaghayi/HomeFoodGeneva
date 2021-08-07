@@ -1,17 +1,37 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:home_food_geneva/SplashScreen.dart';
+import 'package:home_food_geneva/AuthProvider.dart';
+import 'package:home_food_geneva/CartProvider.dart';
+import 'package:home_food_geneva/ProductsProvider.dart';
 import 'package:provider/provider.dart';
 import 'AppProvider.dart';
+import 'SplashScreen.dart';
 import 'Const.dart';
-import 'Auth.dart';
+import 'AuthProvider.dart';
+import 'OrdersProvider.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
-        ChangeNotifierProvider(create: (_) => Auth()),
+        ChangeNotifierProvider.value(value: Auth()),
+        ChangeNotifierProvider.value(value: Cart()),
+        ChangeNotifierProxyProvider<Auth, Products>(
+          update: (context, auth, previousProducts) => Products(
+            auth.token,
+            auth.userId,
+            previousProducts == null ? [] : previousProducts.items,
+          ),
+          create: (ctx) => null,
+        ),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          update: (context, auth, previosOrders) => Orders(
+            auth.token,
+            auth.userId,
+            previosOrders == null ? [] : previosOrders.orders,
+          ),
+          create: (ctx) => null,
+        ),
       ],
       child: MyApp(),
     ),
@@ -19,20 +39,20 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Consumer<AppProvider>(
-        builder: (BuildContext context, AppProvider appProvider, Widget child) {
-      return MaterialApp(
-        key: appProvider.key,
-        debugShowCheckedModeBanner: false,
-        navigatorKey: appProvider.navigatorKey,
-        title: Constants.appName,
-        theme: appProvider.theme,
-        darkTheme: Constants.darkTheme,
-        home: SplashScreen(),
-      );
-    });
+      builder: (BuildContext context, AppProvider appProvider, Widget child) {
+        return MaterialApp(
+          key: appProvider.key,
+          debugShowCheckedModeBanner: false,
+          navigatorKey: appProvider.navigatorKey,
+          title: Constants.appName,
+          theme: appProvider.theme,
+          darkTheme: Constants.darkTheme,
+          home: SplashScreen(),
+        );
+      },
+    );
   }
 }
