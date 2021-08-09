@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:home_food_geneva/Drawer.dart';
+import 'package:home_food_geneva/HomePage.dart';
 import 'package:provider/provider.dart';
 
 import 'AuthProvider.dart';
@@ -17,6 +19,7 @@ class AuthScreen extends StatelessWidget {
     // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
     // transformConfig.translate(-10.0);
     return Scaffold(
+      drawer: DrawerOnly(),
       // resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
@@ -158,7 +161,10 @@ class _AuthCardState extends State<AuthCard>
     }
     _formKey.currentState.save();
     setState(() {
-      _isLoading = true;
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (BuildContext context) {
+        return HomePage();
+      }));
     });
     try {
       if (_authMode == AuthMode.Login) {
@@ -245,6 +251,15 @@ class _AuthCardState extends State<AuthCard>
                   },
                   onSaved: (value) {
                     _authData['email'] = value;
+                  },
+                  onFieldSubmitted: (value) {
+                    if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
+//               var result = await auth.sendPasswordResetEmail(_email);
+//               print(result);
+                      //    print(_email);
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
                 TextFormField(

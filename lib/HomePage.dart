@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_food_geneva/ProductsOverviewScreen.dart';
+import 'package:home_food_geneva/ShopList.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:convert';
 import 'NavigationBar.dart';
@@ -162,7 +162,7 @@ class HomePage extends StatelessWidget {
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (BuildContext context) {
-            return ProductsOverviewScreen();
+            return ShopListWidget();
           }));
         },
         backgroundColor: Colors.red[400],
