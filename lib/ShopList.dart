@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:intl/number_symbols.dart';
 import 'CartList.dart';
 import 'ShoppingCart.dart';
 import 'item.dart';
@@ -134,12 +137,46 @@ class _ShopListItem extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 16),
                 ),
-                Text(this.isInCart ? "In Cart" : item.formattedAvailability,
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        child: IconButton(
+                          icon: Icon(Icons.remove),
+                          alignment: Alignment.centerLeft,
+                          onPressed: () {
+                            item.number -= 1;
+                          },
+                        ),
+                      ),
+                      Container(
+                          child: Text(
+                        item.formattedNumber,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .subhead
+                            .apply(fontSizeFactor: 0.8),
+                      )),
+                      Container(
+                        child: IconButton(
+                          icon: Icon(Icons.add),
+                          alignment: Alignment.centerLeft,
+                          onPressed: () {
+                            item.number += 1;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                /*  Text(this.isInCart ? "In Cart" : item.formattedAvailability,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.caption.apply(
                         fontSizeFactor: 0.8,
                         color:
-                            isInCart ? Colors.blue : item.availabilityColor)),
+                            isInCart ? Colors.blue : item.availabilityColor)), */
               ],
             )));
   }

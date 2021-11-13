@@ -9,7 +9,7 @@ class ShoppingCart {
   int get totalPrice {
     int totalPrice = 0;
     items.forEach((i) {
-      totalPrice += i.price;
+      totalPrice += i.price * i.number;
     });
     return totalPrice;
   }
@@ -37,6 +37,10 @@ class ShoppingCart {
     if (!this.isExists(item)) {
       items.add(item);
     }
+    if (this.isExists(item)) {
+      items.add(item);
+      item.number += 1;
+    }
   }
 
   void remove(Item item) {
@@ -56,7 +60,8 @@ class ShoppingCart {
               'description': i.description,
               'price': i.price,
               'inStock': i.inStock,
-              'imageUrl': i.imageUrl
+              'imageUrl': i.imageUrl,
+              'number': i.number
             })
         .toList();
     return {"orderId": this.orderId, "items": items, "total": this.totalPrice};
