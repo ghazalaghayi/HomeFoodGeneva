@@ -9,77 +9,97 @@ import 'HttpException.dart';
 
 class Auth with ChangeNotifier {
   String _token;
-  DateTime _expiryDate;
-  String _userId;
-  Timer _authTimer;
+
+  // DateTime _expiryDate;
+  // String _userId;
+  // Timer _authTimer;
 
   bool get isAuth {
     return token != null;
   }
 
   String get token {
-    if (_expiryDate != null &&
-        _expiryDate.isAfter(DateTime.now()) &&
+    if (
+        // _expiryDate != null &&
+        //     _expiryDate.isAfter(DateTime.now()) &&
         _token != null) {
       return _token;
     }
     return null;
   }
 
-  String get userId {
-    return _userId;
-  }
+  // String get userId {
+  //   return _userId;
+  // }
 
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
-    final url =
-        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/$urlSegment?key=AIzaSyC9awgb27VlN4xhM5qC9zVNi-Rv2eUhTOw';
+    initialToken();
+    final url = "https://ghazal-food.herokuapp.com/api/" + urlSegment;
+    // final url = "http://192.168.0.106:8000/api/" + urlSegment;
     try {
-      final response = await http.post(
-        Uri.parse(url),
-        body: json.encode(
-          {
-            'email': email,
-            'password': password,
-            'returnSecureToken': true,
-          },
-        ),
-      );
-      final responseData = json.decode(response.body);
-      if (responseData['error'] != null) {
-        throw HttpException(responseData['error']['message']);
+      var response = await http.post(Uri.parse(url), body: {
+        'email': email,
+        'password': password,
+        'rpassword': password,
+      }, headers: {
+        "Accept": "application/json",
+        // "Authorization": "Bearer " + prefs.get('token'),
+      }).catchError((error) {
+        print(error.toString());
+      }).timeout(Duration(seconds: 10), onTimeout: () {
+        return null;
+      });
+
+      if (response != null) {
+        var body = jsonDecode(response.body);
+        print('Response body: $body');
+
+        if (response.statusCode == 200) {
+          final responseData = json.decode(response.body);
+
+          if (responseData['error'] != null) {
+            throw HttpException(responseData['error']['message']);
+          }
+
+          _token = responseData['token'];
+          // _userId = responseData['localId'];
+          // _expiryDate = DateTime.now().add(
+          //   Duration(
+          //     seconds: int.parse(
+          //       responseData['expiresIn'],
+          //     ),
+          //   ),
+          // );
+          // _autoLogout();
+          notifyListeners();
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          final userData = json.encode(
+            {
+              'token': _token,
+              // 'userId': _userId,
+              // 'expiryDate': _expiryDate.toIso8601String(),
+            },
+          );
+          print("token: " + _token);
+          prefs.setString('userData', userData);
+        }
       }
-      _token = responseData['idToken'];
-      _userId = responseData['localId'];
-      _expiryDate = DateTime.now().add(
-        Duration(
-          seconds: int.parse(
-            responseData['expiresIn'],
-          ),
-        ),
-      );
-      _autoLogout();
-      notifyListeners();
-      final prefs = await SharedPreferences.getInstance();
-      final userData = json.encode(
-        {
-          'token': _token,
-          'userId': _userId,
-          'expiryDate': _expiryDate.toIso8601String(),
-        },
-      );
-      prefs.setString('userData', userData);
+      if (response == null || response.statusCode != 200) {
+        print("error");
+      }
     } catch (error) {
+      print("error " + error.toString());
       throw error;
     }
   }
 
   Future<void> signup(String email, String password) async {
-    return _authenticate(email, password, 'signupNewUser');
+    return _authenticate(email, password, 'register');
   }
 
   Future<void> login(String email, String password) async {
-    return _authenticate(email, password, 'verifyPassword');
+    return _authenticate(email, password, 'login');
   }
 
   Future<bool> tryAutoLogin() async {
@@ -89,38 +109,45 @@ class Auth with ChangeNotifier {
     }
     final extractedUserData =
         json.decode(prefs.getString('userData')) as Map<String, Object>;
-    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
+    // final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
 
-    if (expiryDate.isBefore(DateTime.now())) {
-      return false;
-    }
+    // if (expiryDate.isBefore(DateTime.now())) {
+    //   return false;
+    // }
     _token = extractedUserData['token'];
-    _userId = extractedUserData['userId'];
-    _expiryDate = expiryDate;
+    // _userId = extractedUserData['userId'];
+    // _expiryDate = expiryDate;
     notifyListeners();
-    _autoLogout();
+    // _autoLogout();
     return true;
   }
 
   Future<void> logout() async {
     _token = null;
-    _userId = null;
-    _expiryDate = null;
-    if (_authTimer != null) {
-      _authTimer.cancel();
-      _authTimer = null;
-    }
+    // _userId = null;
+    // _expiryDate = null;
+    // if (_authTimer != null) {
+    //   _authTimer.cancel();
+    //   _authTimer = null;
+    // }
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     // prefs.remove('userData');
     prefs.clear();
   }
 
-  void _autoLogout() {
-    if (_authTimer != null) {
-      _authTimer.cancel();
-    }
-    final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
-    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
+// void _autoLogout() {
+//   if (_authTimer != null) {
+//     _authTimer.cancel();
+//   }
+//   final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
+//   _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
+// }
+
+  void initialToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _token = null;
+    prefs.clear();
+    notifyListeners();
   }
 }

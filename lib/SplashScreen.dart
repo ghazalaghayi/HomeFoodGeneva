@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'AuthProvider.dart';
 import 'Const.dart';
 import 'WalkThrough.dart';
 
@@ -33,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<Auth>(context, listen: false).tryAutoLogin();
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: Container(

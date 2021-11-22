@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:home_food_geneva/AuthScreen.dart';
 import 'package:home_food_geneva/ShopList.dart';
+import 'package:provider/provider.dart';
+import 'AuthProvider.dart';
 import 'HomePage.dart';
 import 'About.dart';
 import 'Contact.dart';
@@ -10,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 class DrawerOnly extends StatelessWidget {
   @override
   Widget build(BuildContext ctxt) {
+    String token = Provider.of<Auth>(ctxt, listen: false).token;
     return new Drawer(
         child: new ListView(
       children: <Widget>[
@@ -38,12 +41,16 @@ class DrawerOnly extends StatelessWidget {
         ),
         Divider(),
         new ListTile(
-          title: new Text("SignUp or LogIn",
+          title: new Text(token == null ? "SignUp or LogIn" : "Log out",
               style: TextStyle(fontFamily: "OpenSans")),
           onTap: () {
             Navigator.pop(ctxt);
-            Navigator.push(ctxt,
-                new MaterialPageRoute(builder: (ctxt) => new AuthScreen()));
+            if (token == null) {
+              Navigator.push(ctxt,
+                  new MaterialPageRoute(builder: (ctxt) => new AuthScreen()));
+            } else {
+              Provider.of<Auth>(ctxt, listen: false).logout();
+            }
           },
         ),
         Divider(),

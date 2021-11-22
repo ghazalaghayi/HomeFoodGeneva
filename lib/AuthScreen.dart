@@ -160,15 +160,11 @@ class _AuthCardState extends State<AuthCard>
       return;
     }
     _formKey.currentState.save();
-    setState(() {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (BuildContext context) {
-        return HomePage();
-      }));
-    });
+
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
+
         await Provider.of<Auth>(context, listen: false).login(
           _authData['email'],
           _authData['password'],
@@ -179,6 +175,15 @@ class _AuthCardState extends State<AuthCard>
           _authData['email'],
           _authData['password'],
         );
+      }
+
+      if (Provider.of<Auth>(context, listen: false).token != null) {
+        setState(() {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (BuildContext context) {
+            return HomePage();
+          }));
+        });
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed';
@@ -310,7 +315,7 @@ class _AuthCardState extends State<AuthCard>
                 else
                   RaisedButton(
                     child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                        Text((_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP')),
                     onPressed: _submit,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
