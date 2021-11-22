@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Constants{
-
+class Constants {
   static String appName = "Home Food Geneva";
 
   //Colors for theme
@@ -14,7 +13,6 @@ class Constants{
   static Color darkBG = Colors.black;
   static Color ratingBG = Colors.yellow[600];
 
-
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     backgroundColor: darkBG,
@@ -24,7 +22,7 @@ class Constants{
     cursorColor: darkAccent,
     appBarTheme: AppBarTheme(
       textTheme: TextTheme(
-        title: TextStyle(
+        headline1: TextStyle(
           color: lightBG,
           fontSize: 18.0,
           fontWeight: FontWeight.w800,

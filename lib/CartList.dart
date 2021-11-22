@@ -96,13 +96,13 @@ class _CartListSummaryFooterWidget extends StatelessWidget {
               Text(
                 'Total',
                 textAlign: TextAlign.left,
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.headline1,
               ),
               Expanded(
                   child: Text(
                 this.totalPrice,
                 textAlign: TextAlign.right,
-                style: Theme.of(context).textTheme.subhead,
+                style: Theme.of(context).textTheme.subtitle1,
               ))
             ],
           )),
@@ -138,7 +138,7 @@ class _CartListItemWidget extends StatelessWidget {
               child: Text(
             item.name,
             style:
-                Theme.of(context).textTheme.title.apply(fontSizeFactor: 0.75),
+                Theme.of(context).textTheme.headline1.apply(fontSizeFactor: 0.75),
           )),
           Padding(
             padding: EdgeInsets.only(right: 8.0),
@@ -146,7 +146,7 @@ class _CartListItemWidget extends StatelessWidget {
           Text(
             item.formattedPrice,
             textAlign: TextAlign.right,
-            style: Theme.of(context).textTheme.subhead,
+            style: Theme.of(context).textTheme.subtitle1,
           )
         ],
       ),

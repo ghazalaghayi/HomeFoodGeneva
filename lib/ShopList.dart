@@ -1,7 +1,4 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:intl/number_symbols.dart';
 import 'CartList.dart';
 import 'ShoppingCart.dart';
 import 'item.dart';
@@ -17,6 +14,7 @@ class _ShopListState extends State<ShopListWidget> {
   ShoppingCart cart = ShoppingCart();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final List<Item> items = Item.dummyItems;
+
   @override
   Widget build(BuildContext context) {
     final columnCount =
@@ -83,16 +81,23 @@ class _ShopListState extends State<ShopListWidget> {
   }
 }
 
-class _ShopListItem extends StatelessWidget {
+class _ShopListItem extends StatefulWidget {
   final Item item;
   final bool isInCart;
   final bool isSideLine;
   dynamic onTap;
+
   _ShopListItem({this.item, this.isInCart, this.isSideLine, this.onTap});
+
+  @override
+  State<_ShopListItem> createState() => _ShopListItemState();
+}
+
+class _ShopListItemState extends State<_ShopListItem> {
   @override
   Widget build(BuildContext context) {
     Border border;
-    if (isSideLine) {
+    if (widget.isSideLine) {
       border = Border(
           bottom: BorderSide(color: Colors.grey, width: 0.5),
           right: BorderSide(color: Colors.grey, width: 0.5));
@@ -100,7 +105,7 @@ class _ShopListItem extends StatelessWidget {
       border = Border(bottom: BorderSide(color: Colors.grey, width: 0.5));
     }
     return InkWell(
-        onTap: () => this.onTap(item),
+        onTap: () => this.widget.onTap(widget.item),
         child: Container(
             decoration: BoxDecoration(border: border),
             child: Column(
@@ -112,27 +117,27 @@ class _ShopListItem extends StatelessWidget {
                 Container(
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: Image.network(item.imageUrl),
+                    child: Image.asset(widget.item.imageUrl),
                   ),
                   height: 250,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 16),
                 ),
-                Text(item.name,
+                Text(widget.item.name,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .title
+                        .subtitle2
                         .apply(fontSizeFactor: 0.8)),
                 Padding(
                   padding: EdgeInsets.only(top: 16),
                 ),
-                Text(item.formattedPrice,
+                Text(widget.item.formattedPrice,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .subhead
+                        .subtitle1
                         .apply(fontSizeFactor: 0.8)),
                 Padding(
                   padding: EdgeInsets.only(top: 16),
@@ -146,17 +151,19 @@ class _ShopListItem extends StatelessWidget {
                           icon: Icon(Icons.remove),
                           alignment: Alignment.centerLeft,
                           onPressed: () {
-                            item.number -= 1;
+                            setState(() {
+                              widget.item.number -= 1;
+                            });
                           },
                         ),
                       ),
                       Container(
                           child: Text(
-                        item.formattedNumber,
+                        widget.item.formattedNumber,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .subhead
+                            .subtitle1
                             .apply(fontSizeFactor: 0.8),
                       )),
                       Container(
@@ -164,7 +171,9 @@ class _ShopListItem extends StatelessWidget {
                           icon: Icon(Icons.add),
                           alignment: Alignment.centerLeft,
                           onPressed: () {
-                            item.number += 1;
+                            setState(() {
+                              widget.item.number += 1;
+                            });
                           },
                         ),
                       ),

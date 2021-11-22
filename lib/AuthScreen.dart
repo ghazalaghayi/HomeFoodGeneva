@@ -57,7 +57,7 @@ class AuthScreen extends StatelessWidget {
                       child: Text(
                         'Join Us',
                         style: TextStyle(
-                          color: Theme.of(context).accentTextTheme.title.color,
+                          color: Color(0xfffcfcff),
                           fontSize: 50,
                           fontFamily: 'OpenSans',
                           fontWeight: FontWeight.normal,
