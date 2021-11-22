@@ -4,8 +4,11 @@ import 'package:uuid/uuid.dart';
 class ShoppingCart {
   final orderId = Uuid().v4();
   List<Item> items = [];
+
   bool get isEmpty => items.isEmpty;
+
   int get numOfItems => items.length;
+
   int get totalPrice {
     int totalPrice = 0;
     items.forEach((i) {
@@ -30,25 +33,28 @@ class ShoppingCart {
   }
 
   void add(Item item) {
-    if (items.isEmpty) {
-      items.add(item);
-      return;
-    }
-    if (!this.isExists(item)) {
-      items.add(item);
-    }
-    if (this.isExists(item)) {
-      items.add(item);
-      item.number += 1;
-    }
+    // if (items.isEmpty || !this.isExists(item)) {
+    items.add(item);
+    // if (item.number < 20) item.number += 1;
+    // }
+    // if (!this.isExists(item)) {
+    //   items.add(item);
+    // }
+    // else if (this.isExists(item)) {
+    // items.add(item);
+    // if (item.number < 20) item.number += 1;
+    // }
   }
 
   void remove(Item item) {
-    if (items.isEmpty) return;
-    final indexOfItem = items.indexWhere((i) => item.id == i.id);
-    if (indexOfItem >= 0) {
-      items.removeAt(indexOfItem);
-    }
+    // if (items.isEmpty) return;
+    // final indexOfItem = items.indexWhere((i) => item.id == i.id);
+    // print("index: " + indexOfItem.toString());
+    // if (indexOfItem >= 0) {
+    // items.removeAt(indexOfItem);
+    items.removeWhere((i) => i.id == item.id);
+    // if (item.number > 0) item.number -= 1;
+    // }
   }
 
   Map<String, dynamic> get toMap {

@@ -32,26 +32,38 @@ class _ShopListState extends State<ShopListWidget> {
       final item = this.items[x];
       items.add(_ShopListItem(
         item: item,
-        isInCart: cart.isExists(item),
+        // isInCart: cart.isExists(item),
         isSideLine: isSideLine,
         onTap: (item) {
-          _scaffoldKey.currentState.hideCurrentSnackBar();
-          if (cart.isExists(item)) {
+          // _scaffoldKey.currentState.hideCurrentSnackBar();
+          // if (cart.isExists(item)) {
+          //   cart.remove(item);
+          //   _scaffoldKey.currentState.showSnackBar(SnackBar(
+          //     content: Text('Item is removed from cart!'),
+          //   ));
+          // } else{// if (item.inStock) {
+
+          if (item.number == 0) {
             cart.remove(item);
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text('Item is removed from cart!'),
-            ));
-          } else if (item.inStock) {
+          } else {
+            cart.remove(item);
             cart.add(item);
+          }
+          setState(() {
+
+          });
+          if (item.number > 0) {
+            _scaffoldKey.currentState.hideCurrentSnackBar();
             _scaffoldKey.currentState.showSnackBar(SnackBar(
               content: Text('Item is added to cart!'),
             ));
-          } else {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text('Item is out of stock!'),
-            ));
           }
-          this.setState(() {});
+          // }
+          // else {
+          //   _scaffoldKey.currentState.showSnackBar(SnackBar(
+          //     content: Text('Item is out of stock!'),
+          //   ));
+          // }
         },
       ));
     }
@@ -72,7 +84,7 @@ class _ShopListState extends State<ShopListWidget> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => CartListWidget(
-                            cart: this.cart,
+                            cart: cart,
                           )));
                 },
                 icon: Icon(Icons.shopping_cart),
@@ -83,11 +95,17 @@ class _ShopListState extends State<ShopListWidget> {
 
 class _ShopListItem extends StatefulWidget {
   final Item item;
-  final bool isInCart;
+
+  // final bool isInCart;
   final bool isSideLine;
   dynamic onTap;
 
-  _ShopListItem({this.item, this.isInCart, this.isSideLine, this.onTap});
+  _ShopListItem({
+    this.item,
+    // this.isInCart,
+    this.isSideLine,
+    this.onTap,
+  });
 
   @override
   State<_ShopListItem> createState() => _ShopListItemState();
@@ -104,89 +122,93 @@ class _ShopListItemState extends State<_ShopListItem> {
     } else {
       border = Border(bottom: BorderSide(color: Colors.grey, width: 0.5));
     }
-    return InkWell(
-        onTap: () => this.widget.onTap(widget.item),
-        child: Container(
-            decoration: BoxDecoration(border: border),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 16),
-                ),
-                Container(
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Image.asset(widget.item.imageUrl),
+    return Container(
+        decoration: BoxDecoration(border: border),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+            ),
+            Container(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Image.asset(widget.item.imageUrl),
+              ),
+              height: 250,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+            ),
+            Text(widget.item.name,
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    .apply(fontSizeFactor: 0.8)),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+            ),
+            Text(widget.item.formattedPrice,
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .apply(fontSizeFactor: 0.8)),
+            Padding(
+              padding: EdgeInsets.only(top: 16),
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    child: IconButton(
+                      icon: Icon(Icons.remove),
+                      alignment: Alignment.centerLeft,
+                      onPressed: () {
+                        setState(() {
+                          if (widget.item.number > 0) {
+                            widget.item.number -= 1;
+                            this.widget.onTap(widget.item);
+                          }
+                        });
+                      },
+                    ),
                   ),
-                  height: 250,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 16),
-                ),
-                Text(widget.item.name,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        .apply(fontSizeFactor: 0.8)),
-                Padding(
-                  padding: EdgeInsets.only(top: 16),
-                ),
-                Text(widget.item.formattedPrice,
+                  Container(
+                      child: Text(
+                    widget.item.formattedNumber,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
                         .subtitle1
-                        .apply(fontSizeFactor: 0.8)),
-                Padding(
-                  padding: EdgeInsets.only(top: 16),
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        child: IconButton(
-                          icon: Icon(Icons.remove),
-                          alignment: Alignment.centerLeft,
-                          onPressed: () {
-                            setState(() {
-                              widget.item.number -= 1;
-                            });
-                          },
-                        ),
-                      ),
-                      Container(
-                          child: Text(
-                        widget.item.formattedNumber,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .apply(fontSizeFactor: 0.8),
-                      )),
-                      Container(
-                        child: IconButton(
-                          icon: Icon(Icons.add),
-                          alignment: Alignment.centerLeft,
-                          onPressed: () {
-                            setState(() {
-                              widget.item.number += 1;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
+                        .apply(fontSizeFactor: 0.8),
+                  )),
+                  Container(
+                    child: IconButton(
+                      icon: Icon(Icons.add),
+                      alignment: Alignment.centerLeft,
+                      onPressed: () {
+                        setState(() {
+                          if (widget.item.number < 20) {
+                            widget.item.number += 1;
+                            this.widget.onTap(widget.item);
+                          }
+                        });
+                      },
+                    ),
                   ),
-                )
-                /*  Text(this.isInCart ? "In Cart" : item.formattedAvailability,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.caption.apply(
-                        fontSizeFactor: 0.8,
-                        color:
-                            isInCart ? Colors.blue : item.availabilityColor)), */
-              ],
-            )));
+                ],
+              ),
+            )
+            /*  Text(this.isInCart ? "In Cart" : item.formattedAvailability,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.caption.apply(
+                    fontSizeFactor: 0.8,
+                    color:
+                        isInCart ? Colors.blue : item.availabilityColor)), */
+          ],
+        ));
   }
 }

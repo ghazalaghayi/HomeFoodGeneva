@@ -7,7 +7,9 @@ import 'item.dart';
 
 class CartListWidget extends StatefulWidget {
   final ShoppingCart cart;
+
   CartListWidget({this.cart});
+
   @override
   State<StatefulWidget> createState() {
     return _CartListWidgetState();
@@ -16,6 +18,7 @@ class CartListWidget extends StatefulWidget {
 
 class _CartListWidgetState extends State<CartListWidget> {
   static const platform = const MethodChannel('camellabs.com/payment');
+
   Future<void> _checkout() async {
     await platform.invokeMethod('charge', widget.cart.toMap);
   }
@@ -24,12 +27,14 @@ class _CartListWidgetState extends State<CartListWidget> {
   Widget build(BuildContext context) {
     List<Widget> items = [];
     widget.cart.items.forEach((c) {
-      items.add(_CartListItemWidget(
-        item: c,
-      ));
-      items.add(Padding(
-        padding: EdgeInsets.only(top: 8.0),
-      ));
+      if (c.number > 0) {
+        items.add(_CartListItemWidget(
+          item: c,
+        ));
+        items.add(Padding(
+          padding: EdgeInsets.only(top: 8.0),
+        ));
+      }
     });
     return Scaffold(
       appBar: AppBar(
@@ -65,7 +70,7 @@ class _CartListWidgetState extends State<CartListWidget> {
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (BuildContext context) {
-            return;
+            return ;
           }));
         },
         backgroundColor: Colors.red[400],
@@ -81,7 +86,9 @@ class _CartListWidgetState extends State<CartListWidget> {
 
 class _CartListSummaryFooterWidget extends StatelessWidget {
   final String totalPrice;
+
   _CartListSummaryFooterWidget({this.totalPrice});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -96,7 +103,7 @@ class _CartListSummaryFooterWidget extends StatelessWidget {
               Text(
                 'Total',
                 textAlign: TextAlign.left,
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.subtitle1,
               ),
               Expanded(
                   child: Text(
@@ -112,7 +119,9 @@ class _CartListSummaryFooterWidget extends StatelessWidget {
 
 class _CartListItemWidget extends StatelessWidget {
   final Item item;
+
   _CartListItemWidget({this.item});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -122,29 +131,40 @@ class _CartListItemWidget extends StatelessWidget {
               top: BorderSide(color: Colors.grey, width: 0.5),
               bottom: BorderSide(color: Colors.grey, width: 0.5))),
       padding: EdgeInsets.all(16.0),
-      child: Row(
-        children: <Widget>[
-          Container(
-            height: 64,
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Image.network(item.imageUrl),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 8.0),
-          ),
-          Expanded(
-              child: Text(
-            item.name,
-            style:
-                Theme.of(context).textTheme.headline1.apply(fontSizeFactor: 0.75),
-          )),
-          Padding(
-            padding: EdgeInsets.only(right: 8.0),
+      child: Column(
+        children: [
+          Row(
+            children: <Widget>[
+              Container(
+                height: 64,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.asset(item.imageUrl),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 8.0),
+              ),
+              Expanded(
+                  child: Text(
+                item.name,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .apply(fontSizeFactor: 0.75),
+              )),
+              Padding(
+                padding: EdgeInsets.only(right: 8.0),
+              ),
+              Text(
+                item.formattedPrice,
+                textAlign: TextAlign.right,
+                style: Theme.of(context).textTheme.subtitle1,
+              )
+            ],
           ),
           Text(
-            item.formattedPrice,
+            "x" + item.number.toString(),
             textAlign: TextAlign.right,
             style: Theme.of(context).textTheme.subtitle1,
           )

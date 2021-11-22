@@ -32,7 +32,7 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/zereshkpolo.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "2",
             name: "Ghormeh Sabzi",
@@ -40,7 +40,7 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/ghorme.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "3",
             name: "Loobia-Polo",
@@ -48,7 +48,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/loobiapolo.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "4",
             name: "Baghali-Polo",
@@ -56,7 +56,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/baghalipolo.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "5",
             name: "Gheimeh",
@@ -64,7 +64,7 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/gheime.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "6",
             name: "Kabab Tabei",
@@ -72,7 +72,7 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/kabab.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "7",
             name: "Adas-Polo",
@@ -80,7 +80,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/adaspolo.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "8",
             name: "Khoresh Karafs",
@@ -88,7 +88,7 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/karafs.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "9",
             name: "Chicken Curry",
@@ -96,7 +96,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/curry.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "10",
             name: "Khoresh Bademjan",
@@ -104,7 +104,7 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/gheimebademjoon.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "11",
             name: "Khoresh Fesenjan",
@@ -112,7 +112,7 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/fesenjoon.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "12",
             name: "Kookoo-Sabzi",
@@ -120,7 +120,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/kookoosabzi.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "13",
             name: "Mirza-Ghasemi",
@@ -128,7 +128,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/mirzaghasemi.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "14",
             name: "Kashk-Bademjan",
@@ -136,7 +136,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/kashkbademjoon.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "15",
             name: "Ash Reshteh",
@@ -144,7 +144,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/ashreshte.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "16",
             name: "Tah-Chin",
@@ -152,7 +152,7 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/tahchin.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "17",
             name: "Soup Jo",
@@ -160,7 +160,7 @@ class Item {
             price: 15,
             inStock: true,
             imageUrl: 'images/soupjo.jpg',
-            number: 1),
+            number: 0),
         Item(
             id: "18",
             name: "Khoresh-Aloo Esfenaj",
@@ -168,6 +168,6 @@ class Item {
             price: 20,
             inStock: true,
             imageUrl: 'images/alooesfenaj.jpg',
-            number: 1),
+            number: 0),
       ];
 }
