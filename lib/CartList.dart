@@ -1,8 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:home_food_geneva/AuthScreen.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'AuthProvider.dart';
 import 'ShoppingCart.dart';
+import 'Code.dart';
 import 'item.dart';
 
 class CartListWidget extends StatefulWidget {
@@ -21,6 +27,24 @@ class _CartListWidgetState extends State<CartListWidget> {
 
   Future<void> _checkout() async {
     await platform.invokeMethod('charge', widget.cart.toMap);
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -67,11 +91,55 @@ class _CartListWidgetState extends State<CartListWidget> {
             ],
           )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (BuildContext context) {
-            return ;
-          }));
+        onPressed: () async {
+          try {
+            if (Provider.of<Auth>(context, listen: false).token == null) {
+              return Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return AuthScreen();
+              }));
+            }
+
+            setState(() {
+              widget.cart.items = [];
+            });
+            Provider.of<Code>(context, listen: false).getCode();
+            Navigator.of(context).pop(true);
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false, // user must tap button!
+              builder: (BuildContext context) {
+                return Provider.of<Code>(context, listen: true).code == "-1"
+                    ? Center()
+                    : Provider.of<Code>(context, listen: true).code == null
+                        ? Center(child: CircularProgressIndicator())
+                        : AlertDialog(
+                            title: const Text('Success'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: <Widget>[
+                                  Text('Your order submitted successfully.'),
+                                  Text('Thank you for your shopping.'),
+                                  Text('Code: ' +
+                                      Provider.of<Code>(context, listen: true)
+                                          .code),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+              },
+            );
+          } catch (errorMessage) {
+            _showErrorDialog(errorMessage);
+          }
         },
         backgroundColor: Colors.red[400],
         child: Icon(

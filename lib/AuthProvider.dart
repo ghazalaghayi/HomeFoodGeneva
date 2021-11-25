@@ -47,7 +47,7 @@ class Auth with ChangeNotifier {
         // "Authorization": "Bearer " + prefs.get('token'),
       }).catchError((error) {
         print(error.toString());
-      }).timeout(Duration(seconds: 10), onTimeout: () {
+      }).timeout(Duration(seconds: 30), onTimeout: () {
         return null;
       });
 
@@ -86,11 +86,25 @@ class Auth with ChangeNotifier {
         }
       }
       if (response == null || response.statusCode != 200) {
-        print("error");
+        throw("Your credential is invalid");
       }
     } catch (error) {
       print("error " + error.toString());
-      throw error;
+      var errorMessage = 'Could not authenticate you. Please try again later.';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use.';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password.';
+      }else if (error.toString().contains('Your credential is invalid')) {
+        errorMessage = 'Your credential is invalid';
+      }
+      throw errorMessage;
     }
   }
 
@@ -115,6 +129,7 @@ class Auth with ChangeNotifier {
     //   return false;
     // }
     _token = extractedUserData['token'];
+    // print("Token: "+_token);
     // _userId = extractedUserData['userId'];
     // _expiryDate = expiryDate;
     notifyListeners();

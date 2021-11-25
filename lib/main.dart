@@ -5,6 +5,7 @@ import 'AppProvider.dart';
 import 'SplashScreen.dart';
 import 'Const.dart';
 import 'AuthProvider.dart';
+import 'Code.dart';
 
 void main() {
   runApp(
@@ -12,6 +13,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider.value(value: Auth()),
+        ChangeNotifierProvider.value(value: Code()),
       ],
       child: MyApp(),
     ),

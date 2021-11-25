@@ -49,9 +49,7 @@ class _ShopListState extends State<ShopListWidget> {
             cart.remove(item);
             cart.add(item);
           }
-          setState(() {
-
-          });
+          setState(() {});
           if (item.number > 0) {
             _scaffoldKey.currentState.hideCurrentSnackBar();
             _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -82,10 +80,21 @@ class _ShopListState extends State<ShopListWidget> {
             ? null
             : FloatingActionButton.extended(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CartListWidget(
-                            cart: cart,
-                          )));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (context) => CartListWidget(
+                                cart: cart,
+                              )))
+                      .then((value) {
+                    if (value != null && value) {
+                      setState(() {
+                        cart = ShoppingCart();
+                        this.items.forEach((i) {
+                          i.number = 0;
+                        });
+                      });
+                    }
+                  });
                 },
                 icon: Icon(Icons.shopping_cart),
                 label: Text("${cart.numOfItems}"),

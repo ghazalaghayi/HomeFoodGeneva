@@ -144,7 +144,7 @@ class _AuthCardState extends State<AuthCard>
         content: Text(message),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okay'),
+            child: Text('OK'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -160,6 +160,10 @@ class _AuthCardState extends State<AuthCard>
       return;
     }
     _formKey.currentState.save();
+
+    setState(() {
+      _isLoading = true;
+    });
 
     try {
       if (_authMode == AuthMode.Login) {
@@ -185,23 +189,7 @@ class _AuthCardState extends State<AuthCard>
           }));
         });
       }
-    } on HttpException catch (error) {
-      var errorMessage = 'Authentication failed';
-      if (error.toString().contains('EMAIL_EXISTS')) {
-        errorMessage = 'This email address is already in use.';
-      } else if (error.toString().contains('INVALID_EMAIL')) {
-        errorMessage = 'This is not a valid email address';
-      } else if (error.toString().contains('WEAK_PASSWORD')) {
-        errorMessage = 'This password is too weak.';
-      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMessage = 'Could not find a user with that email.';
-      } else if (error.toString().contains('INVALID_PASSWORD')) {
-        errorMessage = 'Invalid password.';
-      }
-      _showErrorDialog(errorMessage);
-    } catch (error) {
-      const errorMessage =
-          'Could not authenticate you. Please try again later.';
+    } catch (errorMessage) {
       _showErrorDialog(errorMessage);
     }
 
@@ -314,8 +302,8 @@ class _AuthCardState extends State<AuthCard>
                   CircularProgressIndicator()
                 else
                   RaisedButton(
-                    child:
-                        Text((_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP')),
+                    child: Text(
+                        (_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP')),
                     onPressed: _submit,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
